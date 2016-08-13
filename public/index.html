@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Jmoney Chatwagon</title>
+    <link rel="stylesheet" href="app.css" charset="utf-8">
+  </head>
+  <body>
+    <h3 id="room-name">You haven't joined a chat yet.</h3>
+
+    <ul id="messages"></ul>
+
+    <div id="container">
+      <form id="send" class="hide" action="">
+        <input id="m" autocomplete="off" /><button>Send</button>
+      </form>
+
+      <form id="join" class="" action="">
+        <input id="chatroom" type="text" name="name" value="" placeholder="Choose a chat room">
+        <input id="username" type="text" name="name" value="" placeholder="Pick a username">
+        <button type="submit" name="button">Join chat</button>
+      </form>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js">
+    </script>
+    <script src="app.js"></script>
+  </body>
+</html>

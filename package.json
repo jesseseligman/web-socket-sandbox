@@ -1,0 +1,16 @@
+{
+  "name": "basic-chat",
+  "version": "0.1.0",
+  "description": "chat",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jesse Seligman <jesseseligman@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.14.0",
+    "nodemon": "^1.10.0",
+    "socket.io": "^1.4.8"
+  }
+}
