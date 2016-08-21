@@ -2,7 +2,6 @@
   'use strict';
 
   $('#join').submit(function(event) {
-    console.log('submitss');
     event.preventDefault()
 
     //this starts up a socket connection
@@ -13,15 +12,22 @@
 
     $('#join').addClass('hide');
     $('#send').removeClass('hide');
-    $('#room-name').text(username + ' you are in chatroom: ' + chatroom);
 
     //this sends a message to the server to join a specific chat room
-    socket.emit('subscribe', chatroom);
+    socket.emit('subscribe', {
+      userAuth: true,
+      chatroom: chatroom,
+      username: username
+    });
+
+    socket.on('success', function(data) {
+      $('#room-dwellers').append(`<h3>${data.username} has joined chatroom: ${data.chatroom}</h3>`);
+    });
 
     //an event handler is added to the #send form element that sends a chat message including the username, message, and chatroom id
     $('#send').submit(function(){
       socket.emit('chat message', {
-        chatId: chatroom,
+        chatroom: chatroom,
         message: $('#m').val(),
         username: username
       });
@@ -30,7 +36,7 @@
     });
 
     // when the server emits the 'chat message' event back here, the user and message are appended to the #messages <ul> in the DOM
-    socket.on('chat message', function(data) {
+    socket.on('post message', function(data) {
       $('#messages').append($('<li>').text(data.username + ': ' + data.message));
     });
 

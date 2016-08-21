@@ -9,14 +9,17 @@ app.use(express.static('public'))
 io.sockets.on('connection', (socket) => {
   console.log('a user connected');
 
-  // when the client triggers this 'subscribe' event, the server calls socket.join which adds the client to the specific chatroom
-  socket.on('subscribe', function(chatroom) {
-    socket.join(chatroom);
+  socket.on('subscribe', function(data) {
+    const { username, userAuth, chatroom } = data;
+
+    if (userAuth) {
+      socket.join(chatroom);
+      io.sockets.in(chatroom).emit('success', { username, chatroom });
+    }
   });
 
-  // when the client triggers this 'chat message' event, the server emits the message only to the chatroom passed into io.sockets.in([chatroom name])
   socket.on('chat message', (data) => {
-    io.sockets.in(data.chatId).emit('chat message', data);
+    io.sockets.in(data.chatroom).emit('post message', data);
   });
 
   socket.on('disconnect', () => {
